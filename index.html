@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文字修仙-打怪爆装</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Simple scrollbar styling for a better look */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1f2937; /* bg-gray-800 */
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #4b5563; /* bg-gray-600 */
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280; /* bg-gray-500 */
+      }
+
+      /* --- Equipment Quality Text Effects --- */
+      .text-legendary {
+        background: linear-gradient(to right, #f97316, #fbbf24);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .text-epic {
+        background: linear-gradient(to right, #9333ea, #d946ef);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .text-ancient {
+        background: linear-gradient(to right, #f43f5e, #fb7185);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: ancient-red-glow 2s ease-in-out infinite;
+      }
+      .text-supreme {
+         background: linear-gradient(to right, #fde047, #facc15);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: supreme-gold-glow 2s ease-in-out infinite;
+      }
+      
+      @keyframes ancient-red-glow {
+        0%, 100% { text-shadow: 0 0 6px #f43f5e, 0 0 12px #ef4444; }
+        50% { text-shadow: 0 0 10px #fb7185, 0 0 20px #f43f5e; }
+      }
+
+      @keyframes supreme-gold-glow {
+        0%, 100% { text-shadow: 0 0 6px #fde047, 0 0 12px #facc15; }
+        50% { text-shadow: 0 0 10px #facc15, 0 0 20px #eab308; }
+      }
+
+      @keyframes chaos-glow {
+        0%, 100% { text-shadow: 0 0 7px #ef4444; }
+        20% { text-shadow: 0 0 7px #eab308; }
+        40% { text-shadow: 0 0 7px #22c55e; }
+        60% { text-shadow: 0 0 7px #3b82f6; }
+        80% { text-shadow: 0 0 7px #d946ef; }
+      }
+      @keyframes chaos-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .text-chaos {
+        background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #84cc16, #22c55e, #14b8a6, #06b6d4, #3b82f6, #8b5cf6, #d946ef, #ef4444);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: chaos-gradient 5s ease infinite, chaos-glow 5s ease-in-out infinite;
+      }
+      
+      @keyframes void-fast-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes void-glow {
+        0% { text-shadow: 0 0 8px #ef4444; }
+        10% { text-shadow: 0 0 8px #f97316; }
+        20% { text-shadow: 0 0 8px #eab308; }
+        30% { text-shadow: 0 0 8px #22c55e; }
+        40% { text-shadow: 0 0 8px #06b6d4; }
+        50% { text-shadow: 0 0 8px #3b82f6; }
+        60% { text-shadow: 0 0 8px #8b5cf6; }
+        70% { text-shadow: 0 0 8px #000000; }
+        80% { text-shadow: 0 0 8px #ffffff; }
+        90%, 100% { text-shadow: 0 0 8px #ef4444; }
+      }
+      .text-void {
+        background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #06b6d4, #3b82f6, #8b5cf6, #000000, #ffffff, #ef4444);
+        background-size: 400% 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: void-fast-gradient 1.5s linear infinite, void-glow 1.5s linear infinite;
+      }
+
+      /* --- Monster Rank Text Effects --- */
+      @keyframes monarch-gold-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .text-monarch-gold {
+        background: linear-gradient(90deg, #fde047, #facc15, #eab308, #facc15, #fde047);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: monarch-gold-gradient 4s ease infinite;
+      }
+
+      @keyframes monarch-dark-gold-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .text-monarch-dark-gold {
+        background: linear-gradient(90deg, #a16207, #ca8a04, #eab308, #ca8a04, #a16207);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: monarch-dark-gold-gradient 4s ease infinite;
+      }
+
+      @keyframes ancient-red-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .text-ancient-red {
+        background: linear-gradient(90deg, #991b1b, #dc2626, #ef4444, #dc2626, #991b1b);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: ancient-red-gradient 3s ease infinite;
+      }
+      
+      /* --- Ancient Chest Effect --- */
+      @keyframes ancient-chest-bg-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .bg-ancient-chest-gradient {
+        background: linear-gradient(-45deg, #23153c, #44107a, #ff1361, #fff800);
+        background-size: 400% 400%;
+        animation: ancient-chest-bg-pan 8s ease infinite;
+      }
+
+      @keyframes ancient-chest-text-pan {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .text-ancient-chest-text {
+        background: linear-gradient(90deg, #00f2fe, #4facfe, #00f2fe);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: ancient-chest-text-pan 3s linear infinite;
+      }
+
+      @keyframes ancient-chest-border-glow {
+          0% { box-shadow: 0 0 5px #ff1361, 0 0 10px #ff1361, inset 0 0 5px #44107a; }
+          50% { box-shadow: 0 0 10px #fff800, 0 0 20px #fff800, inset 0 0 10px #23153c; }
+          100% { box-shadow: 0 0 5px #ff1361, 0 0 10px #ff1361, inset 0 0 5px #44107a; }
+      }
+      .border-ancient-chest {
+        border: 2px solid transparent;
+        animation: ancient-chest-border-glow 4s ease-in-out infinite;
+      }
+
+
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.5s ease-out;
+      }
+
+      /* Grid block effect animations */
+      @keyframes grid-effect-flash {
+        0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+        70% { box-shadow: 0 0 10px 20px rgba(255, 255, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+      }
+      .animate-grid-combat {
+        animation: grid-effect-flash 0.5s ease-out;
+      }
+
+       @keyframes grid-effect-loot {
+        0% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); } /* yellow-400 */
+        70% { box-shadow: 0 0 10px 20px rgba(250, 204, 21, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); }
+      }
+      .animate-grid-loot {
+        animation: grid-effect-loot 0.5s ease-out;
+      }
+
+      /* --- Attack Animations --- */
+      @keyframes projectile-fly {
+          to {
+              transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.5);
+              opacity: 0.5;
+          }
+      }
+      .projectile {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          background: radial-gradient(circle, rgba(255,100,100,1) 0%, rgba(255,0,0,0) 70%);
+          border-radius: 50%;
+          animation: projectile-fly 0.7s ease-in forwards;
+          pointer-events: none;
+          z-index: 100;
+          will-change: transform;
+      }
+
+      @keyframes hit-feedback {
+          0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+          70% { box-shadow: 0 0 10px 20px rgba(255, 0, 0, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+      }
+      .animate-hit-feedback {
+          animation: hit-feedback 0.5s ease-out;
+      }
+      
+      /* Stat Down Animation */
+      @keyframes stat-down-arrow-anim {
+        0% { opacity: 1; transform: translateY(-20px) scale(0.8); }
+        100% { opacity: 0; transform: translateY(20px) scale(1.2); }
+      }
+      .stat-down-arrow {
+          font-size: 48px;
+          font-weight: bold;
+          color: #ef4444; /* red-500 */
+          text-shadow: 0 0 5px #000;
+          animation: stat-down-arrow-anim 1s ease-out forwards;
+      }
+
+      /* Generic feedback animation for numbers and text */
+      @keyframes feedback-pop {
+          0% { transform: translateY(0) scale(0.8); opacity: 1; }
+          25% { transform: translateY(-40px) scale(1.2); }
+          100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+      }
+      .feedback-item {
+          position: absolute;
+          font-weight: bold;
+          text-shadow: 1px 1px 2px black;
+          animation: feedback-pop 1.5s ease-out forwards;
+          pointer-events: none;
+          z-index: 101;
+          will-change: transform, opacity;
+          white-space: normal; /* Allow text wrapping */
+          text-align: center;
+          transform: translateX(-50%); /* Center the item on its point */
+      }
+      
+      /* --- Player Block & Fatal Hit Animations --- */
+      @keyframes player-border-glow {
+        0%, 100% {
+          box-shadow: 0 0 6px 2px rgba(250, 204, 21, 0.4), inset 0 0 6px 2px rgba(250, 204, 21, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 12px 4px rgba(250, 204, 21, 0.6), inset 0 0 12px 2px rgba(250, 204, 21, 0.3);
+        }
+      }
+      .animate-player-glow {
+        animation: player-border-glow 2.5s ease-in-out infinite;
+      }
+
+      @keyframes fatal-health-flash {
+        0%, 33%, 66%, 100% { transform: scale(1); opacity: 1; }
+        16.5%, 49.5%, 82.5% { transform: scale(1.4); opacity: 0.7; }
+      }
+      .animate-fatal-flash {
+          animation: fatal-health-flash 1.5s ease-in-out;
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "../utils": "./utils.ts",
+    "./hooks/useGameState": "./hooks/useGameState.ts",
+    "./hooks/useGameLog": "./hooks/useGameLog.ts",
+    "./hooks/useTopStats": "./hooks/useTopStats.ts",
+    "./hooks/useGridManager": "./hooks/useGridManager.ts",
+    "./hooks/usePlayerActions": "./hooks/usePlayerActions.ts",
+    "./hooks/useGameModes": "./hooks/useGameModes.ts",
+    "./hooks/useInteractionManager": "./hooks/useInteractionManager.ts",
+    "./hooks/useCombatResolver": "./hooks/useCombatResolver.ts",
+    "./hooks/useItemResolver": "./hooks/useItemResolver.ts",
+    "./hooks/useAutomation": "./hooks/useAutomation.ts",
+    "./services/refining": "./services/refining.ts",
+    "./services/combatResult": "./services/combatResult.ts",
+    "./services/itemResult": "./services/itemResult.ts",
+    "./services/equipmentCalculations": "./services/equipmentCalculations.ts",
+    "./services/equipmentGeneration": "./services/equipmentGeneration.ts",
+    "./services/equipmentManager": "./services/equipmentManager.ts",
+    "./services/equipmentModification": "./services/equipmentModification.ts",
+    "./services/challengeService": "./services/challengeService.ts",
+    "./services/friendlyUnitGenerator": "./services/friendlyUnitGenerator.ts",
+    "./components/GridBlock": "./components/GridBlock.tsx",
+    "./components/CombatAnimations": "./components/CombatAnimations.tsx",
+    "./components/MonsterCompendium": "./components/MonsterCompendium.tsx",
+    "./components/FriendlyUnitModal": "./components/FriendlyUnitModal.tsx",
+    "./components/GMPanel": "./components/GMPanel.tsx",
+    "./components/FloorControls": "./components/FloorControls.tsx",
+    "./components/LogPanel": "./components/LogPanel.tsx",
+    "./services/stateManager": "./services/stateManager.ts",
+    "./hooks/useGameSession": "./hooks/useGameSession.ts",
+    "./hooks/useUIStateManager": "./hooks/useUIStateManager.ts",
+    "./hooks/useGameEngine": "./hooks/useGameEngine.ts",
+    "./hooks/useGameLifecycle": "./hooks/useGameLifecycle.ts"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-900 text-gray-200 font-sans">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

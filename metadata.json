@@ -1,0 +1,6 @@
+{
+  "name": "Remix: 交互",
+  "description": "一个基于React和Tailwind CSS的中文文字RPG游戏。玩家可以打怪升级，获取随机属性的装备，并不断提升自己的实力。",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
