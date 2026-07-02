@@ -1,20 +1,50 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Never More（永不复还世界）
 
-# Run and deploy your AI Studio app
+一个基于中文"魔塔"游戏内核构建的放置向 Roguelike 小游戏。摸鱼时间攒出来的项目，快一年没更新了，开源出来存个档。
+大致就是你打一回合我打一回合，直到一方先倒下。
 
-This contains everything you need to run your app locally.
+## 这是个什么游戏
 
-View your app in AI Studio: https://ai.studio/apps/2676b91e-e485-4350-af43-69b97a1fbbe1
+<img width="1367" height="787" alt="image" src="https://github.com/user-attachments/assets/5dfb349b-812f-4e44-9cec-3426e67c4286" />
 
-## Run Locally
+在一个 4x4 的网格地图里搜寻、战斗、爬楼层。核心玩法围绕"境界"和"品质"两套成长体系展开——楼层越高，遇到的敌人和掉落的装备下限越高；通过"淬炼""炼化""吞噬"等机制不断强化装备，一路挑战更高的楼层（数字阶级十分夸张，能到古戈尔，但我本人从没有玩到那么后面）。
 
-**Prerequisites:**  Node.js
+几个做得比较完整的系统：
 
+- **网格地图与路径判定**：基于 BFS 的可达性判断，地图状态会持久化，刷新页面不会重置进度（防止用刷新逃避"敌人主动进攻"惩罚）
+- **楼层系统**：楼层越高、低阶怪物和装备的生成概率越低，楼层挑战需要击败一个"远古级"的怪物才能解锁下一层
+- **自动化系统**：自动战斗 / 自动拾取 / 自动装备 / 自动炼化 / 自动淬炼，五个开关配合一套优先级判定逻辑（境界 > 神性词条 > 品质 > 战力），支持一键批处理
+- **境界挑战**：解锁更高阶敌人的搜寻权限，失败或放弃都有对应的风险机制
+- 有自带的GM后台，点击角色信息触发。
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+<img width="1920" height="919" alt="image" src="https://github.com/user-attachments/assets/830cc4bb-aea0-4ca6-be7f-739e9d23e08b" />
+
+具体数值和规则写在仓库里各个系统的设计文档中（境界系统、装备系统、战斗系统、楼层系统、敌人系统、战利品系统、友军系统），感兴趣可以直接翻源文件。
+
+## 现状
+
+半成品。核心循环能跑起来（战斗爆装备爬塔升级），但还有不少没做完的部分。本来想把 AI 缝进游戏逻辑里（比如动态生成敌人/剧情文本），但一直没腾出时间，所以先这样开源出来。
+大部分设定都写在对应的md里面，存放在根目录
+
+## 本地运行
+
+**环境要求**：Node.js
+
+```bash
+# 安装依赖
+npm install
+
+# 在 .env.local 中配置 Gemini API Key
+GEMINI_API_KEY=你的key（没有api也能玩，我个人用的是mistral，烂尾在ai发言来主动触发行为）
+
+# 启动
+npm run dev
+```
+
+## 技术栈
+
+TypeScript + Vite，从 Google AI Studio 模板生成。
+
+## 关于
+
+个人摸鱼项目，不定期更新（大概率是不更新）。如果你觉得某个系统设计有意思，或者想接着往下做，欢迎 fork 或者提 issue 聊聊。
